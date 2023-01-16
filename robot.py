@@ -1,8 +1,7 @@
-from re import I
 from wpilib import XboxController
 from wpilib import Talon
 
-# Create objects for the Xbox controller and the Spark motor controllers
+
 controller = XboxController(0)
 front_left_motor = Talon(0)
 front_right_motor = Talon(1)

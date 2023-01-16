@@ -1,35 +1,42 @@
-from wpilib import XboxController
-from wpilib import Talon
+import wpilib
+import wpilib.drive
+
+class MyRobot(wpilib.TimedRobot):
+    def robotInit(self):
+
+        self.lstick = wpilib.Joystick(0)
+        self.rstick = wpilib.Joystick(1)
+
+        self.front_left = wpilib.Jaguar(1)
+        self.mid_left = wpilib.Jaguar(2)
+        self.rear_left = wpilib.Jaguar(3)
+        self.left = wpilib.MotorControllerGroup(self.front_left, self.mid_left, self.rear_left)
+
+        self.front_right = wpilib.Jaguar(4)
+        self.mid_right = wpilib.Jaguar(5)
+        self.rear_right = wpilib.Jaguar(6)
+        self.right = wpilib.MotorControllerGroup(self.front_right, self.mid_right, self.rear_right)
+
+        self.drive = wpilib.drive.DifferentialDrive(self.left, self.right)
+
+    def teleopPeriodic(self):
+        """Called when operation control mode is enabled"""
+
+        self.drive.arcadeDrive(-self.lstick.getY(), self.lstick.getX())
+
+        # Move a motor with a Joystick
+        y = self.rstick.getY()
+
+        # stop movement backwards when 1 is on
+        if self.limit1.get():
+            y = max(0, y)
+
+        # stop movement forwards when 2 is on
+        if self.limit2.get():
+            y = min(0, y)
+
+        self.motor.set(y)
 
 
-controller = XboxController(0)
-front_left_motor = Talon(0)
-front_right_motor = Talon(1)
-rear_left_motor = Talon(2)
-rear_right_motor = Talon(3)
-center_left_motor = Talon(4)
-center_right_motor = Talon(5)
-
-
-def teleopPeriodic():
-    # Get the joystick values from the Xbox controller
-    x = controller.getleftX()
-    y = controller.getleftY()
-
-    # Apply the motor speeds to the motor controllers
-    if(x> 0.1 or y> 0.1):
-        front_left_motor.set(-y + x)
-        center_left_motor.set(-y + x)
-        rear_left_motor.set(-y + x)
-        
-        front_right_motor.set(-y - x)
-        center_right_motor.set(-y - x)
-        rear_right_motor.set(-y - x)
-    else:
-        front_left_motor.set(0)
-        center_left_motor.set(0)
-        rear_left_motor.set(0)
-        
-        front_right_motor.set(0)
-        center_right_motor.set(0)
-        rear_right_motor.set(0)
+if __name__ == "__main__":
+    wpilib.run(MyRobot)

@@ -6,11 +6,16 @@
       "style": "0",
       "userScale": "2",
       "width": "1600",
-      "xpos": "147",
-      "ypos": "129"
+      "xpos": "291",
+      "ypos": "40"
     }
   },
   "Window": {
+    "###/SmartDashboard/Field": {
+      "Collapsed": "0",
+      "Pos": "852,46",
+      "Size": "318,287"
+    },
     "###FMS": {
       "Collapsed": "0",
       "Pos": "6,675",
@@ -19,7 +24,7 @@
     "###Joysticks": {
       "Collapsed": "0",
       "Pos": "312,581",
-      "Size": "976,82"
+      "Size": "976,179"
     },
     "###NetworkTables": {
       "Collapsed": "0",
